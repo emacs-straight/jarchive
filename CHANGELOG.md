@@ -1,5 +1,19 @@
 # Change Log
 
+## 2022-11-13 0.7.0 Release Notes
+- Add info about jarchive on ELPA
+
+## 2022-11-13 0.6.0 Release Notes
+- Add link to bug tracker
+
+## 2022-11-13 0.5.0 Release Notes
+- Fix Typo
+
+## 2022-11-13 0.4.0 Release Notes
+- Remove some unnecessary messages
+- Misc non breaking fixes
+- Quiet down eglot patch messages in case it's called from a hook
+
 ## 2022-11-12 0.3.0 Release Notes
 
 - Assigned copyright to Free Software Foundation (elpa requirement)

@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2022 Free Software Foundation, Inc.
 ;; Authors: Danny Freeman <danny@dfreeman.email>
-;; Maintainer: Danny Freeman <danny@dfreeman.email>>
-;; Version: 0.3.0
+;; Maintainer: Danny Freeman <danny@dfreeman.email>
+;; Version: 0.6.0
 ;; Keywords: tools, languages, jvm, java, clojure
 ;; URL: https://git.sr.ht/~dannyfreeman/jarchive
 ;; Package-Requires: ((emacs "26.1"))
@@ -130,7 +130,6 @@ primitive. See `(elisp)Magic File Names'."
              (list uri (string-width (buffer-string)))))
           (t (apply op args)))))
     (jarchive--inhibit op 'jarchive--file-name-handler
-                       (message "jarchive--inhibit %s for %s" op args)
                        (apply op args))))
 
 (defun jarchive--find-file-not-found ()
@@ -146,7 +145,7 @@ If path is a jar URI, don't parse. If it is not a jar call ORIGINAL-FN."
   (let ((path (file-truename (car args))))
     (if (equal "jar" (url-type (url-generic-parse-url path)))
         path
-      (apply 'funcall original-fn args))))
+      (apply original-fn args))))
 
 (defun jarchive--wrap-legacy-eglot--uri-to-path (original-fn &rest args)
   "Hack until eglot is updated.
@@ -155,22 +154,19 @@ If URI is a jar URI, don't parse and let the `jarchive--file-name-handler'
 handle it. If it is not a jar call ORIGINAL-FN."
   (let ((uri (car args)))
     (if (string= "file" (url-type (url-generic-parse-url uri)))
-        (apply 'funcall original-fn args)
+        (apply original-fn args)
       uri)))
 
 ;;;###autoload
 (defun jarchive-patch-eglot ()
   "Patch old versions of Eglot to work with Jarchive."
   (interactive) ;; TODO, remove when eglot is updated in melpa
-  (cond
-   ((version<= "29" emacs-version)
-    (message "[jarchive] Eglot does not need to be patched. Skipping."))
-   ((or (not (fboundp 'eglot--path-to-uri))
-        (not (fboundp 'eglot--uri-to-path)))
-    (message "[jarchive] Eglot is not loaded, try calling `jarchive-patch-eglot' after loading eglot."))
-   (t (advice-add 'eglot--path-to-uri :around #'jarchive--wrap-legacy-eglot--path-to-uri)
-      (advice-add 'eglot--uri-to-path :around #'jarchive--wrap-legacy-eglot--uri-to-path)
-      (message "[jarchive] Eglot successfully patched."))))
+  (unless (or (and (advice-member-p #'jarchive--wrap-legacy-eglot--path-to-uri 'eglot--path-to-uri)
+                   (advice-member-p #'jarchive--wrap-legacy-eglot--uri-to-path 'eglot--uri-to-path ))
+              (<= 29 emacs-major-version))
+    (advice-add 'eglot--path-to-uri :around #'jarchive--wrap-legacy-eglot--path-to-uri)
+    (advice-add 'eglot--uri-to-path :around #'jarchive--wrap-legacy-eglot--uri-to-path)
+    (message "[jarchive] Eglot successfully patched.")))
 
 ;;;###autoload
 (defun jarchive-setup ()
