@@ -1,5 +1,9 @@
 # Change Log
 
+## 2022-12-07 0.9.0 Release Notes
+- Add missing file-name-handler operations
+  - Thank you Michael Albinus for pointing this out on the bug-gnu-emacs mailing list!
+
 ## 2022-11-14 0.8.0 Release Notes
 - Readme Changes
 

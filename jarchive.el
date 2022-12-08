@@ -3,7 +3,7 @@
 ;; Copyright (C) 2022 Free Software Foundation, Inc.
 ;; Authors: Danny Freeman <danny@dfreeman.email>
 ;; Maintainer: Danny Freeman <danny@dfreeman.email>
-;; Version: 0.8.0
+;; Version: 0.9.0
 ;; Keywords: tools, languages, jvm, java, clojure
 ;; URL: https://git.sr.ht/~dannyfreeman/jarchive
 ;; Package-Requires: ((emacs "26.1"))
@@ -92,6 +92,8 @@ primitive. See `(elisp)Magic File Names'."
           ((eq op 'directory-file-name) (directory-file-name (file-name-directory jar-path)))
           ((eq op 'file-name-case-insensitive-p) (file-name-case-insensitive-p jar-path))
           ((eq op 'file-attributes) nil)
+          ((eq op 'make-auto-save-file-name) nil)
+          ((eq op 'abbreviate-file-name) uri)
 
           ;; Predicates
           ((eq op 'file-directory-p) nil)
@@ -102,6 +104,7 @@ primitive. See `(elisp)Magic File Names'."
           ((eq op 'file-symlink-p) (file-symlink-p jar-path))
           ((eq op 'file-accessible-directory-p) nil)
           ((eq op 'file-executable-p) nil)
+          ((eq op 'vc-registered) nil)
 
           ;; Custom implementations
           ((eq op 'get-file-buffer)
@@ -162,7 +165,7 @@ handle it. If it is not a jar call ORIGINAL-FN."
   "Patch old versions of Eglot to work with Jarchive."
   (interactive) ;; TODO, remove when eglot is updated in melpa
   (unless (or (and (advice-member-p #'jarchive--wrap-legacy-eglot--path-to-uri 'eglot--path-to-uri)
-                   (advice-member-p #'jarchive--wrap-legacy-eglot--uri-to-path 'eglot--uri-to-path ))
+                   (advice-member-p #'jarchive--wrap-legacy-eglot--uri-to-path 'eglot--uri-to-path))
               (<= 29 emacs-major-version))
     (advice-add 'eglot--path-to-uri :around #'jarchive--wrap-legacy-eglot--path-to-uri)
     (advice-add 'eglot--uri-to-path :around #'jarchive--wrap-legacy-eglot--uri-to-path)
