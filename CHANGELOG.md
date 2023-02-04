@@ -1,5 +1,11 @@
 # Change Log
 
+## 2023-01-18 0.10.0 Release Notes
+- Thank you Robert Brown for the following contributions:
+  - Handle opening archives with the .zip extension
+  - Handle opening files (within archives) that do not have a `.` in the name 
+  - Some cleanup in the README
+
 ## 2022-12-07 0.9.0 Release Notes
 - Add missing file-name-handler operations
   - Thank you Michael Albinus for pointing this out on the bug-gnu-emacs mailing list!
