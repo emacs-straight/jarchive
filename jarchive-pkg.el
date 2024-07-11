@@ -1,0 +1,2 @@
+;; Generated package description from jarchive.el  -*- no-byte-compile: t -*-
+(define-package "jarchive" "0.11.0.0.20231010.221311" "Open project dependencies in jar archives" '((emacs "26.1")) :commit "9b5edcb9ac4937ad41bc830714534fec5ebe48ee" :maintainer '("Danny Freeman" . "danny@dfreeman.email") :keywords '("tools" "languages" "jvm" "java" "clojure") :url "https://git.sr.ht/~dannyfreeman/jarchive")
