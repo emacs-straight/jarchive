@@ -1,2 +1,2 @@
-;; Generated package description from jarchive.el  -*- no-byte-compile: t -*-
-(define-package "jarchive" "0.11.0.0.20231010.221311" "Open project dependencies in jar archives" '((emacs "26.1")) :commit "9b5edcb9ac4937ad41bc830714534fec5ebe48ee" :maintainer '("Danny Freeman" . "danny@dfreeman.email") :keywords '("tools" "languages" "jvm" "java" "clojure") :url "https://git.sr.ht/~dannyfreeman/jarchive")
+;; Generated package description from jarchive.el  -*- no-byte-compile: t; lexical-binding:t -*-
+(define-package "jarchive" "0.11.0.0.20260418.75255" "Open project dependencies in jar archives" '((emacs "26.1")) :commit "a7cc063b7f6fba6c4d1addd2b9ac4a01df50899d" :maintainer '("Danny Freeman" . "danny@dfreeman.email") :keywords '("tools" "languages" "jvm" "java" "clojure") :url "https://git.sr.ht/~dannyfreeman/jarchive")
